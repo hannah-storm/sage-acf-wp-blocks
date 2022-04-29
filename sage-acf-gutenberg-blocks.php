@@ -171,18 +171,33 @@ function sage_blocks_callback($block, $content = '', $is_preview = false, $post_
     $slug  = str_replace('acf/', '', $block['name']);
     $block = array_merge(['className' => ''], $block);
 
+    $colorClasses = [];
+
     // Set up the block data
     $block['post_id'] = $post_id;
     $block['is_preview'] = $is_preview;
     $block['content'] = $content;
     $block['slug'] = $slug;
     $block['anchor'] = isset($block['anchor']) ? $block['anchor'] : '';
+
+    if ( ! empty( $block['backgroundColor'] ) ) {
+        $colorClasses[] = 'has-background';
+        $colorClasses[] = 'has-' . $block['backgroundColor'] . '-background-color';
+    }
+    if ( ! empty( $block['textColor'] ) ) {
+        $colorClasses[] = 'has-text-color';
+        $colorClasses[] = 'has-' . $block['textColor'] . '-color';
+    }
+
+    $colorClasses = implode(' ', array_filter($colorClasses));
+
     // Send classes as array to filter for easy manipulation.
     $block['classes'] = [
         $slug,
         $block['className'],
         $block['is_preview'] ? 'is-preview' : null,
-        'align'.$block['align']
+        'align'.$block['align'],
+        $colorClasses
     ];
 
     // Filter the block data.
