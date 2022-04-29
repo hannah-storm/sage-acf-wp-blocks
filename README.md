@@ -22,6 +22,7 @@ Add blade templates to `views/blocks` which get and use ACF data. Each template 
   SupportsAlign:
   SupportsMode:
   SupportsMultiple:
+  SupportsColor:
   EnqueueStyle:
   EnqueueScript:
   EnqueueAssets:
@@ -43,6 +44,7 @@ Add blade templates to `views/blocks` which get and use ACF data. Each template 
   SupportsAlign: left right
   SupportsMode: false
   SupportsMultiple: false
+  SupportsColor: true
   EnqueueStyle: styles/style.css
   EnqueueScript: scripts/script.js
   EnqueueAssets: path/to/asset
@@ -82,7 +84,7 @@ The options in the file header map to options in the [`acf_register_block_type` 
 | `SupportsMultiple` | This property allows the block to be added multiple times. | `true`  or `false` |_optional_ (defaults to `true`) |
 | `SupportsInnerBlocks` | This property allows the block to support the nesting of other blocks within it. | `true`  or `false` |_optional_ (defaults to `false`) |
 | `SupportsAlignText` | This property adds an alignment toolbar button similar to that seen when editing a paragraph of text. | `true`  or `false` |_optional_ (defaults to `false`) |
-| `SupportsAlignContent` | This property adds an alignment toolbar button similar to that seen when editing a core "Cover block" | `true`  or `false` |_optional_ (defaults to `false`) |
+| `SupportsAlignContent` | This property adds an alignment toolbar button similar to that seen when editing a core "Cover block" | `true`  or `false` |_optional_ (defaults to `false`) ||  `SupportsColor` | This property allows the user to add text and background colors from the theme" | `true`  or `false` |_optional_ (defaults to `false`) |
 
 ## Creating ACF fields
 Once a block is created you'll be able to assign ACF fields to it using the standard Custom Fields interface in WordPress. We recommend using [sage-advanced-custom-fields](https://github.com/MWDelaney/sage-advanced-custom-fields) to keep your ACF fields in version control with Sage.
@@ -98,7 +100,7 @@ add_filter('sage/blocks/my-block/data', function ($block) { // Do your thing her
 By default all your template files in `views/blocks` will be loaded. You can use the templates filter to add more folders if you wish. See an example below of how to add your own folders.
 
 ```php
-add_filter('sage-acf-gutenberg-blocks-templates', function ($folders) { 
+add_filter('sage-acf-gutenberg-blocks-templates', function ($folders) {
     $folders[] = 'views/your-folder'; // Adds your folder
     return $folders;
 });
