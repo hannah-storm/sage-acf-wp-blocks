@@ -67,6 +67,7 @@ add_action('acf/init', function () {
                     'template_lock' => 'TemplateLock',
                     'supports_align' => 'SupportsAlign',
                     'supports_anchor' => 'SupportsAnchor',
+                    'supports_lock' => 'SupportsLock',
                     'supports_mode' => 'SupportsMode',
                     'supports_jsx' => 'SupportsInnerBlocks',
                     'supports_align_text' => 'SupportsAlignText',
@@ -117,9 +118,9 @@ add_action('acf/init', function () {
                     $data['post_types'] = explode(' ', $file_headers['post_types']);
                 }
 
-                // If the PostTypes header is set in the template, restrict this block to those types
-                if (!empty($file_headers['template_lock'])) {
-                    $data['template_lock'] = explode(' ', $file_headers['template_lock']);
+                // If the SupportsLock header is set in the template, restrict this block to those types
+                if (!empty($file_headers['supports_lock'])) {
+                    $data['supports']['lock'] = in_array($file_headers['template_lock'], array('all', 'insert'), true) ? filter_var($file_headers['supports_lock'], FILTER_VALIDATE_BOOLEAN) : explode(' ', $file_headers['supports_lock']);
                 }
                 // If the SupportsAlign header is set in the template, restrict this block to those aligns
                 if (!empty($file_headers['supports_align'])) {
