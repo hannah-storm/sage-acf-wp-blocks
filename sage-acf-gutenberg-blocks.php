@@ -64,10 +64,8 @@ add_action('acf/init', function () {
                     'mode' => 'Mode',
                     'align' => 'Align',
                     'post_types' => 'PostTypes',
-                    'template_lock' => 'TemplateLock',
                     'supports_align' => 'SupportsAlign',
                     'supports_anchor' => 'SupportsAnchor',
-                    'supports_lock' => 'SupportsLock',
                     'supports_mode' => 'SupportsMode',
                     'supports_jsx' => 'SupportsInnerBlocks',
                     'supports_align_text' => 'SupportsAlignText',
@@ -106,7 +104,6 @@ add_action('acf/init', function () {
                     'keywords' => explode(' ', $file_headers['keywords']),
                     'mode' => $file_headers['mode'],
                     'align' => $file_headers['align'],
-                    'template_lock' => $file_headers['template_lock'],
                     'render_callback'  => __NAMESPACE__.'\\sage_blocks_callback',
                     'enqueue_style'   => $file_headers['enqueue_style'],
                     'enqueue_script'  => $file_headers['enqueue_script'],
@@ -118,10 +115,6 @@ add_action('acf/init', function () {
                     $data['post_types'] = explode(' ', $file_headers['post_types']);
                 }
 
-                // If the SupportsLock header is set in the template, restrict this block to those types
-                if (!empty($file_headers['supports_lock'])) {
-                    $data['supports']['lock'] = in_array($file_headers['template_lock'], array('all', 'insert'), true) ? filter_var($file_headers['supports_lock'], FILTER_VALIDATE_BOOLEAN) : explode(' ', $file_headers['supports_lock']);
-                }
                 // If the SupportsAlign header is set in the template, restrict this block to those aligns
                 if (!empty($file_headers['supports_align'])) {
                     $data['supports']['align'] = in_array($file_headers['supports_align'], array('true', 'false'), true) ? filter_var($file_headers['supports_align'], FILTER_VALIDATE_BOOLEAN) : explode(' ', $file_headers['supports_align']);
