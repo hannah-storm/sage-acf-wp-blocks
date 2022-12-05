@@ -117,6 +117,10 @@ add_action('acf/init', function () {
                     $data['post_types'] = explode(' ', $file_headers['post_types']);
                 }
 
+                // If the PostTypes header is set in the template, restrict this block to those types
+                if (!empty($file_headers['template_lock'])) {
+                    $data['template_lock'] = explode(' ', $file_headers['template_lock']);
+                }
                 // If the SupportsAlign header is set in the template, restrict this block to those aligns
                 if (!empty($file_headers['supports_align'])) {
                     $data['supports']['align'] = in_array($file_headers['supports_align'], array('true', 'false'), true) ? filter_var($file_headers['supports_align'], FILTER_VALIDATE_BOOLEAN) : explode(' ', $file_headers['supports_align']);
